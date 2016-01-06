@@ -23,7 +23,13 @@ class CepsController < ApplicationController
         }.to_json
 
     else
-      render json: @numero
+      render :json => { :status   => :SUCESSO,
+                        :cep      => @numero.try(:cep),
+                        :endereco => @numero.try(:endereco),
+                        :bairro   => @numero.try(:bairro),
+                        :cidade   => @numero.try(:cidade),
+                        :estado   => @numero.try(:estado)
+                      }.to_json
     end
   end
 
