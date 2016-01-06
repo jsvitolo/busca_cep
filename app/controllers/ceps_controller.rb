@@ -9,25 +9,63 @@ class CepsController < ApplicationController
   end
 
   def busca
-    @numero = Cep.find_by(params[:cep])
-    render json: @numero
+    @numero = Cep.find_by(cep: params[:cep])
+    @num = params[:cep]
     binding.pry
+    if @num.size < 9 || @num.size > 9
+      render :json => {
+          :status => :ERRO,
+          :message => "O CEP informado é inválido",
+      }.to_json
+    else
+      if @numero == nil
+        render :json => {
+           :status => :ERRO,
+           :message => "O CEP informado não foi encontrado",
+        }.to_json
+
+    else
+      render json: @numero
+      end
+    end
   end
 
   # GET /ceps/1
   def show
-    binding.pry
     render json: @cep
   end
 
-  # POST /ceps
+  # POST /cadastro
   def create
     @cep = Cep.new(cep_params)
+    @numero = Cep.find_by(cep: params[:cep])
+    if @numero == nil
+        if @cep.save
+          render :json => {
+             :status => :SUCESSO,
+            :message => "O endereço foi cadastrado com sucesso.",
+          }.to_json
 
-    if @cep.save
-      render json: @cep, status: :created, location: @cep
-    else
-      render json: @cep.errors, status: :unprocessable_entity
+        else
+          render json: @cep.errors, status: :unprocessable_entity
+        end
+      else
+      if @cep.cep == @numero.cep
+        render :json => {
+           :status => :ERRO,
+           :message => "O endereço ja existe.",
+        }.to_json
+      else
+        if @cep.save
+          render :json => {
+             :status => :SUCESSO,
+            :message => "O endereço foi cadastrado com sucesso.",
+          }.to_json
+
+        else
+          render json: @cep.errors, status: :unprocessable_entity
+        end
+      end
     end
   end
 
@@ -50,6 +88,8 @@ class CepsController < ApplicationController
     def set_cep
       @cep = Cep.find(params[:id])
     end
+
+
 
     # Only allow a trusted parameter "white list" through.
     def cep_params

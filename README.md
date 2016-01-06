@@ -1,24 +1,44 @@
 ## README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Requisitos
 
-Things you may want to cover:
+### Rails 5
+```
+git clone git://github.com/rails/rails.git
+ cd rails
+ bundle
+```
 
-* Ruby version
+### VISUALIZAR JSON
 
-* System dependencies
+Utilize o [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en)
+para get e post
 
-* Configuration
+## Faça o clone do projeto
 
-* Database creation
+`git@github.com:jsvitolo/busca_cep.git`
 
-* Database initialization
+`bin/bundle install`
 
-* How to run the test suite
+`bin/rake db:migrate`
 
-* Services (job queues, cache servers, search engines, etc.)
+## BUSCAR CEP (GET)
 
-* Deployment instructions
+`http://localhost:3000/busca/00000-000`
 
-* ...
+## CADASTRAR CEP (POST)
+
+`http://localhost:3000/cadastro`
+
+### Exemplo json
+
+```
+{
+    "cep": "15030-300",
+    "endereco": "Rua jose morais",
+    "bairro": "Redentora",
+    "cidade": "Rio Preto",
+    "estado": "SP"
+}
+```
+
