@@ -8,8 +8,15 @@ class CepsController < ApplicationController
     render json: @ceps
   end
 
+  def busca
+    @numero = Cep.find_by(params[:cep])
+    render json: @numero
+    binding.pry
+  end
+
   # GET /ceps/1
   def show
+    binding.pry
     render json: @cep
   end
 
