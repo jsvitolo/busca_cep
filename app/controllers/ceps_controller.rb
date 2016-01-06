@@ -11,14 +11,12 @@ class CepsController < ApplicationController
   def busca
     @numero = Cep.find_by(cep: params[:cep])
     @num = params[:cep]
-    binding.pry
     if @num.size < 9 || @num.size > 9
       render :json => {
           :status => :ERRO,
           :message => "O CEP informado é inválido",
       }.to_json
-    else
-      if @numero == nil
+    elsif @numero == nil
         render :json => {
            :status => :ERRO,
            :message => "O CEP informado não foi encontrado",
@@ -26,7 +24,6 @@ class CepsController < ApplicationController
 
     else
       render json: @numero
-      end
     end
   end
 
@@ -55,8 +52,7 @@ class CepsController < ApplicationController
            :status => :ERRO,
            :message => "O endereço ja existe.",
         }.to_json
-      else
-        if @cep.save
+      elsif @cep.save
           render :json => {
              :status => :SUCESSO,
             :message => "O endereço foi cadastrado com sucesso.",
@@ -64,7 +60,6 @@ class CepsController < ApplicationController
 
         else
           render json: @cep.errors, status: :unprocessable_entity
-        end
       end
     end
   end

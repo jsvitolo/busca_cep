@@ -42,3 +42,8 @@ para get e post
 }
 ```
 
+## TESTES
+
+```
+bin/rake test
+```
